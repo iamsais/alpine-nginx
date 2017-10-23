@@ -9,13 +9,15 @@ RUN apt-get update \
     && apt-get install -y curl \
     && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get update \
-    && apt-get install -y nginx nodejs \
+    && apt-get install -y nginx nodejs supervisor\
     && rm -rf /var/lib/apt/lists/*
 
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY supervisor-app.conf /etc/supervisor/conf.d/
 
 ADD data/www /var/www/html
+COPY install.sh /var/www/html/
 
 RUN rm /etc/nginx/sites-enabled/default
 
@@ -24,4 +26,4 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 
 EXPOSE 80 443
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["supervisord", "-n"]
