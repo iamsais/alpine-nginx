@@ -17,7 +17,6 @@ ADD nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY supervisor-app.conf /etc/supervisor/conf.d/
 
 ADD data/www /var/www/html
-COPY install.sh /var/www/html/
 
 RUN rm /etc/nginx/sites-enabled/default
 
