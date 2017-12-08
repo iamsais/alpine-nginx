@@ -15,6 +15,7 @@ RUN apt-get update \
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY supervisor-app.conf /etc/supervisor/conf.d/
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 ADD data/www /var/www/html
 
